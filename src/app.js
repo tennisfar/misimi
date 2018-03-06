@@ -33,8 +33,8 @@ function preload() {
     this.load.image('star', './src/assets/star.png');
     this.load.image('bomb', './src/assets/bomb.png');
     this.load.spritesheet('dude',
-        './src/assets/dude.png',
-        {frameWidth: 32, frameHeight: 48}
+        './src/assets/misimi.png',
+        {frameWidth: 32, frameHeight: 57}
     );
 }
 
