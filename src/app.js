@@ -1,20 +1,4 @@
-var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: {y: 300},
-            debug: false
-        }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
-};
+import preload from "./preload";
 
 var player;
 var stars;
@@ -25,18 +9,25 @@ var score = 0;
 var gameOver = false;
 var scoreText;
 
-var game = new Phaser.Game(config);
-
-function preload() {
-    this.load.image('sky', './src/assets/sky.png');
-    this.load.image('ground', './src/assets/platform.png');
-    this.load.image('star', './src/assets/star.png');
-    this.load.image('bomb', './src/assets/bomb.png');
-    this.load.spritesheet('dude',
-        './src/assets/misimi.png',
-        {frameWidth: 32, frameHeight: 57}
-    );
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: {y: 350},
+            debug: false
+        }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
 }
+
+var game = new Phaser.Game(config);
 
 function create() {
     //  A simple background for our game
@@ -47,25 +38,28 @@ function create() {
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    platforms.create(400, 570, 'beam').setScale(3).refreshBody();
 
     //  Now let's create some ledges
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    // platforms.create(600, 400, 'ground');
+    // platforms.create(50, 240, 'ground');
+    // platforms.create(750, 250, 'ground');
+    platforms.create(685, 250, 'beam');
+    platforms.create(125, 240, 'beam');
+    platforms.create(540, 385, 'beam');
 
     // The player and its settings
     player = this.physics.add.sprite(100, 450, 'dude');
 
     //  Player physics properties. Give the little guy a slight bounce.
-    player.setBounce(0.2);
+    player.setBounce(0.3);
     player.setCollideWorldBounds(true);
 
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
-        frameRate: 10,
+        frameRate: 15,
         repeat: -1
     });
 
@@ -78,7 +72,7 @@ function create() {
     this.anims.create({
         key: 'right',
         frames: this.anims.generateFrameNumbers('dude', {start: 5, end: 8}),
-        frameRate: 10,
+        frameRate: 15,
         repeat: -1
     });
 
@@ -89,7 +83,7 @@ function create() {
     stars = this.physics.add.group({
         key: 'star',
         repeat: 11,
-        setXY: {x: 12, y: 0, stepX: 70}
+        setXY: {x: 25, y: 0, stepX: 68}
     });
 
     stars.children.iterate(function (child) {

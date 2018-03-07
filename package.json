@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "lite-server"
+    "build": "parcel build index.html --public-url ./",
+    "start": "parcel index.html"
   },
   "keywords": [],
   "author": "",
