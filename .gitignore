@@ -1,3 +1,5 @@
 node_modules
 *.sln
 .idea
+.cache
+dist
