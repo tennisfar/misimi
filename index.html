@@ -1,17 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Misimi v1</title>
-    <style type="text/css">
-        body {
-            margin: 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Misimi v1</title>
+  <style type="text/css">
+    body {
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
 
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-messaging.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAxKYfYxUQd03MiVRvNNjH_Tl82s_2KZN4",
+    authDomain: "misimi-79c83.firebaseapp.com",
+    databaseURL: "https://misimi-79c83.firebaseio.com",
+    projectId: "misimi-79c83",
+    storageBucket: "",
+    messagingSenderId: "482224995696"
+  };
+  // firebase.initializeApp(config);
+
+  // Initialize the default app
+  var defaultApp = firebase.initializeApp(config);
+  // console.error(defaultApp);
+
+  // Get a reference to the database service
+  var database = firebase.database();
+
+  console.log(defaultApp.name);  // "[DEFAULT]"
+
+  // You can retrieve services via the defaultApp variable...
+  // var defaultStorage = defaultApp.storage();
+  // var defaultDatabase = defaultApp.database();
+
+  // ... or you can use the equivalent shorthand notation
+  // defaultStorage = firebase.storage();
+  // defaultDatabase = firebase.database();
+
+  function writeUserData(userId, name, email, imageUrl) {
+    firebase.database().ref('highscore').set({
+      name: 'name',
+      score: 42
+    });
+  }
+
+  function getScore() {
+
+    // var userId = firebase.auth().currentUser.uid;
+    return firebase.database().ref('highscore').once('value').then(function (snapshot) {
+      var username = (snapshot.val() && snapshot.val().name) || 'Anonymous';
+      console.error(username);
+
+    });
+  }
+
+  console.error(getScore());
+
+
+</script>
+
+
 <script src="./src/phaser.min.js"></script>
 <script src="./src/app.js"></script>
+
+
 </body>
 </html>
