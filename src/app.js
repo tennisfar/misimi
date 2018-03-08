@@ -1,3 +1,5 @@
+import preload from "./preload";
+
 var config = {
   type: Phaser.AUTO,
   width: 800,
@@ -28,20 +30,6 @@ var fx;
 var fxGameOver;
 
 var game = new Phaser.Game(config);
-
-function preload() {
-  this.load.image('sky', './src/assets/sky.png');
-  this.load.image('ground', './src/assets/platform.png');
-  this.load.image('star', './src/assets/star.png');
-  this.load.image('bomb', './src/assets/bomb.png');
-  this.load.spritesheet('dude',
-    './src/assets/misimi.png',
-    {frameWidth: 32, frameHeight: 57}
-  );
-
-  this.load.audio('sfx', ['./src/audio/131660__bertrof__game-sound-correct.wav']);
-  this.load.audio('gameOver', ['./src/audio/406113__daleonfire__dead.wav']);
-}
 
 function create() {
   //  A simple background for our game
@@ -106,8 +94,8 @@ function create() {
 
   bombs = this.physics.add.group();
 
-    //  The score
-    scoreText = this.add.text(16, 16, 'Score: 0', {fontSize: '32px', fill: '#000'});
+  //  The score
+  scoreText = this.add.text(16, 16, 'Score: 0', {fontSize: '32px', fill: '#000'});
 
   //  Collide the player and the stars with the platforms
   this.physics.add.collider(player, platforms);
@@ -120,13 +108,12 @@ function create() {
   this.physics.add.collider(player, bombs, hitBomb, null, this);
 
   fx = this.sound.add('sfx');
-  fxGameOver = this.sound.add('gameOver');
   fx.allowMultiple = true;
+  fxGameOver = this.sound.add('gameOver');
 }
 
 function update() {
   if (gameOver) {
-    fxGameOver.play();
     return;
   }
 
@@ -180,6 +167,7 @@ function collectStar(player, star) {
 }
 
 function hitBomb(player, bomb) {
+  fxGameOver.play();
   this.physics.pause();
 
   player.setTint(0xff0000);
