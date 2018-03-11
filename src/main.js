@@ -1,3 +1,4 @@
+import 'phaser';
 import Preload from './Preload';
 
 let cursors;
@@ -8,15 +9,17 @@ let fx;
 let fxGameOver;
 
 class MisimiGame {
-  game: Phaser.Game;
-  player: Phaser.Sprite;
-  stars: Phaser.Sprite;
-  bombs: Phaser.Sprite;
-  platforms: Phaser.Sprite;
+  // game: Phaser.Game;
+  // player: Phaser.Sprite;
+  // stars: Phaser.Sprite;
+  // bombs: Phaser.Sprite;
+  // platforms: Phaser.Sprite;
 
   constructor() {
     this.game = new Phaser.Game({
       type: Phaser.AUTO,
+      // type: Phaser.WEBGL,
+      parent: 'content',
       height: 600,
       width: 800,
       physics: {
