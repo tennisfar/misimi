@@ -22,7 +22,7 @@ class MisimiGame {
       physics: {
         arcade: {
           debug: false,
-          gravity: {y: 300},
+          gravity: { y: 300 },
         },
         default: 'arcade',
       },
@@ -60,20 +60,20 @@ class MisimiGame {
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
       key: 'left',
-      frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
+      frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
       frameRate: 10,
       repeat: -1,
     });
 
     this.anims.create({
       key: 'turn',
-      frames: [{key: 'dude', frame: 4}],
+      frames: [{ key: 'dude', frame: 4 }],
       frameRate: 20,
     });
 
     this.anims.create({
       key: 'right',
-      frames: this.anims.generateFrameNumbers('dude', {start: 5, end: 8}),
+      frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
       frameRate: 10,
       repeat: -1,
     });
@@ -85,7 +85,7 @@ class MisimiGame {
     this.stars = this.physics.add.group({
       key: 'star',
       repeat: 11,
-      setXY: {x: 12, y: 0, stepX: 70},
+      setXY: { x: 12, y: 0, stepX: 70 },
     });
 
     this.stars.children.iterate((child) => {
@@ -98,7 +98,7 @@ class MisimiGame {
     this.bombs = this.physics.add.group();
 
     //  The score
-    scoreText = this.add.text(16, 16, 'Score: 0', {fontSize: '32px', fill: '#000'});
+    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
 
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(this.player, this.platforms);
