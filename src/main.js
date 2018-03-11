@@ -8,6 +8,42 @@ let scoreText;
 let fx;
 let fxGameOver;
 
+function collectStar(player, star) {
+  star.disableBody(true, true);
+
+  fx.play();
+
+  //  Add and update the score
+  score += 10;
+  scoreText.setText(`Score: ${score}`);
+
+  if (this.stars.countActive(true) === 0) {
+    //  A new batch of stars to collect
+    this.stars.children.iterate((child) => {
+      child.enableBody(true, child.x, 0, true, true);
+    });
+
+    const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+    const bomb = this.bombs.create(x, 16, 'bomb');
+    bomb.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+    bomb.allowGravity = false;
+  }
+}
+
+function hitBomb(player) {
+  fxGameOver.play();
+  this.physics.pause();
+
+  player.setTint(0xff0000);
+
+  player.anims.play('turn');
+
+  gameOver = true;
+}
+
 class MisimiGame {
   // game: Phaser.Game;
   // player: Phaser.Sprite;
@@ -92,10 +128,8 @@ class MisimiGame {
     });
 
     this.stars.children.iterate((child) => {
-
       //  Give each star a slightly different bounce
       child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
     });
 
     this.bombs = this.physics.add.group();
@@ -108,7 +142,7 @@ class MisimiGame {
     this.physics.add.collider(this.stars, this.platforms);
     this.physics.add.collider(this.bombs, this.platforms);
 
-    //  Checks to see if the player overlaps with any of the stars, 
+    //  Checks to see if the player overlaps with any of the stars,
     //  if he does call the collectStar function
     this.physics.add.overlap(this.player, this.stars, collectStar, null, this);
 
@@ -143,52 +177,7 @@ class MisimiGame {
       this.player.setVelocityY(-330);
     }
   }
-
-
 }
 
 // const game = new Phaser.Game(config);
-window.onload = () => {
-  const game = new MisimiGame();
-};
-
-
-function collectStar(player, star) {
-  star.disableBody(true, true);
-
-  fx.play();
-
-  //  Add and update the score
-  score += 10;
-  scoreText.setText('Score: ' + score);
-
-  if (this.stars.countActive(true) === 0) {
-
-    //  A new batch of stars to collect
-    this.stars.children.iterate((child) => {
-
-      child.enableBody(true, child.x, 0, true, true);
-
-    });
-
-    const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-    const bomb = this.bombs.create(x, 16, 'bomb');
-    bomb.setBounce(1);
-    bomb.setCollideWorldBounds(true);
-    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-    bomb.allowGravity = false;
-
-  }
-}
-
-function hitBomb(player, bomb) {
-  fxGameOver.play();
-  this.physics.pause();
-
-  player.setTint(0xff0000);
-
-  player.anims.play('turn');
-
-  gameOver = true;
-}
+const game = new MisimiGame();

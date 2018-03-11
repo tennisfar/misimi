@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack",
     "build": "webpack --config webpack.production.config.js",
-    "test": "eslint ./src/**/**.js"
+    "test": "eslint ./src/**/**.js",
+    "test-and-fix": "eslint ./src/**/**.js --fix"
   },
   "keywords": [],
   "author": "",
