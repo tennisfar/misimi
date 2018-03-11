@@ -7,15 +7,13 @@ const sndCollect = require('./audio/131660__bertrof__game-sound-correct.wav');
 const sndGameOver = require('./audio/406113__daleonfire__dead.wav');
 
 export default function () {
-    this.load.image('sky', imgSky);
-    this.load.image('ground', imgPlatform);
-    this.load.image('star', imgStar);
-    this.load.image('bomb', imgBomb);
-    this.load.spritesheet('dude',
-        imgMisimi,
-        {frameWidth: 32, frameHeight: 57}
-    );
+  this.load.image('sky', imgSky);
+  this.load.image('ground', imgPlatform);
+  this.load.image('star', imgStar);
+  this.load.image('bomb', imgBomb);
+  this.load.spritesheet('dude', imgMisimi, { frameWidth: 32, frameHeight: 57 },
+  );
 
-    this.load.audio('sfx', [sndCollect]);
-    this.load.audio('gameOver', [sndGameOver]);
+  this.load.audio('sfx', [sndCollect]);
+  this.load.audio('gameOver', [sndGameOver]);
 }

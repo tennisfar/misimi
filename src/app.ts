@@ -1,35 +1,35 @@
-import preload from "./preload";
+import preload from './preload';
 
-var config = {
+const config = {
   type: Phaser.AUTO,
-  width: 800,
   height: 600,
+  width: 800,
   physics: {
-    default: 'arcade',
     arcade: {
-      gravity: {y: 300},
-      debug: false
-    }
+      debug: false,
+      gravity: { y: 300 },
+    },
+    default: 'arcade',
   },
   scene: {
-    preload: preload,
-    create: create,
-    update: update
-  }
+    preload,
+    create,
+    update,
+  },
 };
 
-var player;
-var stars;
-var bombs;
-var platforms;
-var cursors;
-var score = 0;
-var gameOver = false;
-var scoreText;
-var fx;
-var fxGameOver;
+let player;
+let stars;
+let bombs;
+let platforms;
+let cursors;
+let score = 0;
+let gameOver = false;
+let scoreText;
+let fx;
+let fxGameOver;
 
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
 
 function create() {
   //  A simple background for our game
@@ -40,7 +40,7 @@ function create() {
 
   //  Here we create the ground.
   //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-  platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+  platforms.create(400, 568, 'ground').setScale(2,2).refreshBody();
 
   //  Now let's create some ledges
   platforms.create(600, 400, 'ground');
@@ -57,22 +57,22 @@ function create() {
   //  Our player animations, turning, walking left and walking right.
   this.anims.create({
     key: 'left',
-    frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
+    frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
 
   this.anims.create({
     key: 'turn',
-    frames: [{key: 'dude', frame: 4}],
-    frameRate: 20
+    frames: [{ key: 'dude', frame: 4 }],
+    frameRate: 20,
   });
 
   this.anims.create({
     key: 'right',
-    frames: this.anims.generateFrameNumbers('dude', {start: 5, end: 8}),
+    frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
 
   //  Input Events
@@ -82,10 +82,10 @@ function create() {
   stars = this.physics.add.group({
     key: 'star',
     repeat: 11,
-    setXY: {x: 12, y: 0, stepX: 70}
+    setXY: { x: 12, y: 0, stepX: 70 },
   });
 
-  stars.children.iterate(function (child) {
+  stars.children.iterate((child) => {
 
     //  Give each star a slightly different bounce
     child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
@@ -95,14 +95,15 @@ function create() {
   bombs = this.physics.add.group();
 
   //  The score
-  scoreText = this.add.text(16, 16, 'Score: 0', {fontSize: '32px', fill: '#000'});
+  scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
 
   //  Collide the player and the stars with the platforms
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(stars, platforms);
   this.physics.add.collider(bombs, platforms);
 
-  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+  //  Checks to see if the player overlaps with any of the stars, 
+  //  if he does call the collectStar function
   this.physics.add.overlap(player, stars, collectStar, null, this);
 
   this.physics.add.collider(player, bombs, hitBomb, null, this);
@@ -121,13 +122,11 @@ function update() {
     player.setVelocityX(-160);
 
     player.anims.play('left', true);
-  }
-  else if (cursors.right.isDown) {
+  } else if (cursors.right.isDown) {
     player.setVelocityX(160);
 
     player.anims.play('right', true);
-  }
-  else {
+  } else {
     player.setVelocityX(0);
 
     player.anims.play('turn');
@@ -148,16 +147,17 @@ function collectStar(player, star) {
   scoreText.setText('Score: ' + score);
 
   if (stars.countActive(true) === 0) {
+    
     //  A new batch of stars to collect
-    stars.children.iterate(function (child) {
+    stars.children.iterate((child) => {
 
       child.enableBody(true, child.x, 0, true, true);
 
     });
 
-    var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+    const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-    var bomb = bombs.create(x, 16, 'bomb');
+    const bomb = bombs.create(x, 16, 'bomb');
     bomb.setBounce(1);
     bomb.setCollideWorldBounds(true);
     bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
