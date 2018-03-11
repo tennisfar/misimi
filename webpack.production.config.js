@@ -62,6 +62,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'assets', to: 'assets' },
+      { from: 'audio', to: 'audio' },
     ]),
   ],
   module: {
