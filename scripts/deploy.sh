@@ -2,6 +2,8 @@
 echo "Starting deployment"
 echo "Target: gh-pages branch"
 
+ls
+
 DIST_DIRECTORY="dist/"
 CURRENT_COMMIT=`git rev-parse HEAD`
 ORIGIN_URL=`git config --get remote.origin.url`
