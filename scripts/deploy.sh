@@ -4,7 +4,7 @@ echo "Target: gh-pages branch"
 
 ls
 
-DIST_DIRECTORY="dist/"
+DIST_DIRECTORY="build/"
 CURRENT_COMMIT=`git rev-parse HEAD`
 ORIGIN_URL=`git config --get remote.origin.url`
 ORIGIN_URL_WITH_CREDENTIALS=${ORIGIN_URL/\/\/github.com/\/\/$GITHUB_TOKEN@github.com}
