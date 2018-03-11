@@ -31,7 +31,7 @@ git commit --allow-empty -m "Regenerated static content for $CURRENT_COMMIT" || 
 git push --force --quiet "$ORIGIN_URL_WITH_CREDENTIALS" gh-pages > /dev/null 2>&1
 
 echo "Cleaning up temp files"
-rm -Rf $DIST_DIRECTORY
+rm -Rf $DIST_DIRECTORY || exit 1
 
 echo "Deployed successfully."
 exit 0
