@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import firestore from "./firestore";
 
 class MisimiScene extends Phaser.Scene {
   hitBomb(player) {
@@ -7,6 +8,46 @@ class MisimiScene extends Phaser.Scene {
     player.setTint(0xff0000);
     player.anims.play('turn');
     this.gameOver = true;
+
+    let playerName = prompt("Enter your name", localStorage.getItem("misimiPlayerName") || '');
+    playerName = playerName.toUpperCase().replace(/[^A-Z]+/g, '');
+    localStorage.setItem("misimiPlayerName", playerName);
+
+    if (playerName) {
+      firestore.collection("highscores").add({
+        points: this.score,
+        name: playerName,
+        createdAt: new Date().toISOString()
+      });
+    }
+
+    const rect = new Phaser.Geom.Rectangle(250, 100, 300, 350);
+    const graphics = this.add.graphics({ fillStyle: { color: "rgba(0, 0, 0, 0.5)" } });
+    graphics.fillRectShape(rect);
+
+    this.add.text(290, 120, 'Misimi High Score List', {
+      fontSize: '16px',
+      fill: 'white'
+    });
+
+    firestore.collection("highscores").onSnapshot(snapshot => {
+      let highscores = [];
+      snapshot.forEach(doc => {
+        const highscore = doc.data();
+        highscore.id = doc.id;
+        highscores.push(highscore);
+      });
+      // Sort our todos based on time added
+      highscores.sort((a, b) => a.points > b.points ? -1 : 1);
+
+      for (let i = 0; i < 10; i++) {
+        if (highscores[i]) {
+          this.add.text(290, 180 + i * 25, i + 1 + '.');
+          this.add.text(330, 180 + i * 25, highscores[i].name.substr(0, 10));
+          this.add.text(460, 180 + i * 25, highscores[i].points);
+        }
+      }
+    });
   }
 
   collectStar(player, star) {
