@@ -15,8 +15,8 @@ export function addHighscore(score) {
 }
 
 export function showHighscores(game) {
-  const rect = new Phaser.Geom.Rectangle(250, 100, 300, 350);
-  const graphics = game.add.graphics({ fillStyle: { color: "rgba(0, 0, 0, 0.5)" } });
+  const rect = new Phaser.Geom.Rectangle(0, 0, 800, 600);
+  const graphics = game.add.graphics({ fillStyle: { color: "rgba(255, 0, 0, 0.5)", alpha: ".5" } });
   graphics.fillRectShape(rect);
 
   game.add.text(290, 120, 'Misimi High Score List', {
