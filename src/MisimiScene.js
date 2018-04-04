@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {addHighscore, showHighscores} from "./highscore";
+import { addHighscore, showHighscores } from './highscore';
 
 class MisimiScene extends Phaser.Scene {
   hitBomb(player) {
