@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { addHighscore, showHighscores } from './highscore';
+import {addHighscore, showHighscores} from './highscore';
 
 class MisimiScene extends Phaser.Scene {
   hitBomb(player) {
@@ -8,9 +8,12 @@ class MisimiScene extends Phaser.Scene {
     player.setTint(0xff0000);
     player.anims.play('turn');
     this.gameOver = true;
+    this.cameras.main.shake(500);
 
-    addHighscore(this.score);
-    showHighscores(this);
+    this.time.delayedCall(500, function () {
+      addHighscore(this.score);
+      showHighscores(this);
+    }, [], this);
   }
 
   collectStar(player, star) {
