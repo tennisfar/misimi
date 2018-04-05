@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {addHighscore, showHighscores} from './highscore';
+import { addHighscore, showHighscores } from './highscore';
 
 class MisimiScene extends Phaser.Scene {
   hitBomb(player) {
@@ -42,13 +42,13 @@ class MisimiScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('sky', './assets/sky.png');
-    this.load.image('ground', './assets/platform.png');
-    this.load.image('star', './assets/star.png');
-    this.load.image('bomb', './assets/bomb.png');
-    this.load.spritesheet('dude', './assets/misimi.png', { frameWidth: 32, frameHeight: 57 });
-    this.load.audio('sfx', ['./audio/131660__bertrof__game-sound-correct.wav']);
-    this.load.audio('gameOver', ['./audio/406113__daleonfire__dead.wav']);
+    this.load.image('sky', '../assets/images/sky.png');
+    this.load.image('ground', '../assets/images/platform.png');
+    this.load.image('star', '../assets/images/star.png');
+    this.load.image('bomb', '../assets/images/bomb.png');
+    this.load.spritesheet('dude', '../assets/spritesheets/misimi.png', { frameWidth: 32, frameHeight: 57 });
+    this.load.audio('sfx', ['../assets/audio/131660__bertrof__game-sound-correct.wav']);
+    this.load.audio('gameOver', ['../assets/audio/406113__daleonfire__dead.wav']);
   }
 
   create() {
