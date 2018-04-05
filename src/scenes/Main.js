@@ -1,7 +1,11 @@
 import Phaser from 'phaser';
-import { addHighscore, showHighscores } from './highscore';
+import { addHighscore, showHighscores } from '../highscore';
 
-class MisimiScene extends Phaser.Scene {
+export default class Main extends Phaser.Scene {
+  constructor() {
+    super('main');
+  }
+
   hitBomb(player) {
     this.fxGameOver.play();
     this.physics.pause();
@@ -41,16 +45,6 @@ class MisimiScene extends Phaser.Scene {
     }
   }
 
-  preload() {
-    this.load.image('sky', '../assets/images/sky.png');
-    this.load.image('ground', '../assets/images/platform.png');
-    this.load.image('star', '../assets/images/star.png');
-    this.load.image('bomb', '../assets/images/bomb.png');
-    this.load.spritesheet('dude', '../assets/spritesheets/misimi.png', { frameWidth: 32, frameHeight: 57 });
-    this.load.audio('sfx', ['../assets/audio/131660__bertrof__game-sound-correct.wav']);
-    this.load.audio('gameOver', ['../assets/audio/406113__daleonfire__dead.wav']);
-  }
-
   create() {
     //  A simple background for our game
     this.add.image(400, 300, 'sky');
@@ -68,7 +62,7 @@ class MisimiScene extends Phaser.Scene {
     this.platforms.create(750, 220, 'ground');
 
     // The player and its settings
-    this.player = this.physics.add.sprite(100, 450, 'dude');
+    this.player = this.physics.add.sprite(100, 450, 'misimi');
 
     //  Player physics properties. Give the little guy a slight bounce.
     this.player.setBounce(0.2);
@@ -77,20 +71,20 @@ class MisimiScene extends Phaser.Scene {
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
       key: 'left',
-      frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers('misimi', { start: 0, end: 3 }),
       frameRate: 10,
       repeat: -1,
     });
 
     this.anims.create({
       key: 'turn',
-      frames: [{ key: 'dude', frame: 4 }],
+      frames: [{ key: 'misimi', frame: 4 }],
       frameRate: 20,
     });
 
     this.anims.create({
       key: 'right',
-      frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+      frames: this.anims.generateFrameNumbers('misimi', { start: 5, end: 8 }),
       frameRate: 10,
       repeat: -1,
     });
@@ -157,5 +151,3 @@ class MisimiScene extends Phaser.Scene {
     }
   }
 }
-
-export default MisimiScene;

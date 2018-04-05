@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import firestore from './firestore';
+import firestore from './config/firestore';
 
 export function addHighscore(score) {
   const playerName = prompt('Enter your name', localStorage.getItem('misimiPlayerName') || '');

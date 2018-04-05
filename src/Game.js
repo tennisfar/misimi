@@ -1,29 +1,27 @@
 import Phaser from 'phaser';
-import MisimiScene from './MisimiScene';
+import Preloader from './scenes/Preloader';
+import Main from './scenes/Main';
 
 window.onload = function () {
-  class MisimiGame {
-    constructor() {
-      this.game = new Phaser.Game({
-        type: Phaser.AUTO,
-        parent: 'content',
-        height: 600,
-        width: 800,
-        physics: {
-          arcade: {
-            debug: false,
-            gravity: { y: 300 },
-          },
-          default: 'arcade',
-        },
-        scene: [
-          MisimiScene,
-        ],
-      });
-    }
-  }
+  const config = {
+    type: Phaser.AUTO,
+    parent: 'content',
+    height: 600,
+    width: 800,
+    physics: {
+      arcade: {
+        debug: false,
+        gravity: { y: 300 },
+      },
+      default: 'arcade',
+    },
+    scene: [
+      Preloader,
+      Main,
+    ],
+  };
 
-  const game = new MisimiGame();
+  const game = new Phaser.Game(config);
 
   function resize() {
     const canvas = document.querySelector('canvas');
