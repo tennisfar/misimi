@@ -10,8 +10,9 @@ const phaser = path.join(phaserModule, 'src/phaser.js');
 
 const definePlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false')),
-  WEBGL_RENDERER: true, // I did this to make webpack work, but I'm not really sure it should always be true
-  CANVAS_RENDERER: true, // I did this to make webpack work, but I'm not really sure it should always be true
+  // I did this to make webpack work, but I'm not really sure it should always be true
+  WEBGL_RENDERER: true,
+  CANVAS_RENDERER: true,
 });
 
 module.exports = {
@@ -62,7 +63,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'assets', to: 'assets' },
-      { from: 'audio', to: 'audio' },
     ]),
   ],
   module: {
