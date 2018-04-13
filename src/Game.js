@@ -6,7 +6,7 @@ window.onload = function () {
   const config = {
     type: Phaser.AUTO,
     parent: 'content',
-    height: 600,
+    height: 650,
     width: 800,
     physics: {
       arcade: {
@@ -28,7 +28,7 @@ window.onload = function () {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const windowRatio = windowWidth / windowHeight;
-    const gameRatio = 800 / 600;
+    const gameRatio = 800 / 650;
     if (windowRatio < gameRatio) {
       canvas.style.width = `${windowWidth}px`;
       canvas.style.height = `${windowWidth / gameRatio}px`;

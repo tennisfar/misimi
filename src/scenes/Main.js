@@ -47,19 +47,19 @@ export default class Main extends Phaser.Scene {
 
   create() {
     //  A simple background for our game
-    this.add.image(400, 300, 'sky');
+    this.add.image(400, 300, 'sky').setScale(2, 2);
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     this.platforms = this.physics.add.staticGroup();
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    this.platforms.create(400, 568, 'ground').setScale(2, 2).refreshBody();
+    this.platforms.create(400, 618, 'ground').setScale(2, 2).refreshBody();
 
     //  Now let's create some ledges
-    this.platforms.create(600, 400, 'ground');
-    this.platforms.create(50, 250, 'ground');
-    this.platforms.create(750, 220, 'ground');
+    this.platforms.create(600, 450, 'ground');
+    this.platforms.create(50, 300, 'ground');
+    this.platforms.create(750, 270, 'ground');
 
     // The player and its settings
     this.player = this.physics.add.sprite(100, 450, 'misimi');
