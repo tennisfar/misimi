@@ -5,10 +5,10 @@ export default class Preloader extends Phaser.Scene {
     super({
       key: 'preloader',
       files: [
-        { type: 'image', key: 'sky', url: '../../assets/images/sky.png' },
-        { type: 'image', key: 'ground', url: '../../assets/images/platform.png' },
-        { type: 'image', key: 'star', url: '../../assets/images/star.png' },
-        { type: 'image', key: 'bomb', url: '../../assets/images/bomb.png' },
+        { type: 'image', key: 'sky', url: './assets/images/sky.png' },
+        { type: 'image', key: 'ground', url: './assets/images/platform.png' },
+        { type: 'image', key: 'star', url: './assets/images/star.png' },
+        { type: 'image', key: 'bomb', url: './assets/images/bomb.png' },
       ],
     });
   }
@@ -43,7 +43,7 @@ export default class Preloader extends Phaser.Scene {
   loadSpritesheet() {
     this.load.spritesheet(
       'misimi',
-      '../assets/spritesheets/misimi.png',
+      './assets/spritesheets/misimi.png',
       { frameWidth: 32, frameHeight: 57 },
     );
 
@@ -67,8 +67,8 @@ export default class Preloader extends Phaser.Scene {
     for (let i = 0; i < audioFiles.length; i += 1) {
       this.load.audio(
         audioFiles[i].key,
-        audioPath + audioFiles[i].mp3,
-        audioPath + audioFiles[i].ogg,
+        audioFiles[i].mp3,
+        audioFiles[i].ogg,
       );
     }
   }

@@ -26,7 +26,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/misimi',
+    publicPath: './',
     filename: 'js/bundle.js',
   },
   plugins: [
@@ -62,7 +62,7 @@ module.exports = {
       hash: true,
     }),
     new CopyWebpackPlugin([
-      { from: 'assets', to: 'assets' },
+      { from: 'src/assets', to: 'assets' },
     ]),
   ],
   module: {

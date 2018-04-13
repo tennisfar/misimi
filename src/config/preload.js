@@ -12,7 +12,7 @@ export class AudioFile {
   }
 }
 
-const assetDir = '../../assets';
+const assetDir = './assets';
 
 export const config = {
   // spritesheets
