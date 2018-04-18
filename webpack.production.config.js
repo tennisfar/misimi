@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
 
 // Phaser webpack config
 const phaserModule = path.join(__dirname, '/node_modules/phaser/');
@@ -64,6 +65,13 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'assets' },
     ]),
+    new GoogleFontsPlugin({
+      fonts: [
+        { family: "VT323" },
+        /*{ family: "Roboto", variants: [ "400", "700italic" ] }*/
+      ]
+      /* ...options */
+    }),
   ],
   module: {
     rules: [
