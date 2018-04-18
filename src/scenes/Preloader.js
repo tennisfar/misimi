@@ -33,6 +33,7 @@ export default class Preloader extends Phaser.Scene {
     // // load assets declared in the preload config
     this.loadSpritesheet();
     this.loadAudio();
+    this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
   }
 
   create() {

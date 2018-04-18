@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { addHighscore, showHighscores } from '../highscore';
+import {addHighscore, showHighscores} from '../highscore';
 
 export default class Main extends Phaser.Scene {
   constructor() {
@@ -107,7 +107,7 @@ export default class Main extends Phaser.Scene {
     this.bombs = this.physics.add.group();
 
     //  The score
-    this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+    this.scoreText = this.add.text(16, 16, 'Score: 0', { font: '400 32px VT323', fill: '#000' });
 
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(this.player, this.platforms);
@@ -125,6 +125,7 @@ export default class Main extends Phaser.Scene {
     this.fxGameOver = this.sound.add('gameOver');
 
     this.score = 0;
+    showHighscores(this);
   }
 
   update() {
