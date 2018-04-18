@@ -45,7 +45,7 @@ export function showHighscores(game) {
     highscores.sort((a, b) => (a.points > b.points ? -1 : 1));
 
     // get only unique scores
-    highscores = highscores.filter((score, index, self) => index === self.findIndex((t) => t.points === score.points));
+    highscores = highscores.filter((score, index, self) => index === self.findIndex((t) => t.points === score.points && t.name === score.name));
 
     // display top 15 scores
     for (let i = 0; i < 15; i += 1) {
