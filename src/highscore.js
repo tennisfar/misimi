@@ -28,9 +28,9 @@ export function showHighscores(game) {
 
   game.add.text(290, 120, 'High Scores', { font: '400 50px VT323' });
 
-  let hsPos;
-  let hsName;
-  let hsScore;
+  let hsPos = [];
+  let hsName = [];
+  let hsScore = [];
 
   firestore.collection('highscores').onSnapshot((snapshot) => {
     let highscores = [];
@@ -50,15 +50,15 @@ export function showHighscores(game) {
     // display top 15 scores
     for (let i = 0; i < 15; i += 1) {
       if (highscores[i]) {
-        if (hsPos && i === 0) {
-          hsPos.setText('');
-          hsName.setText('');
-          hsScore.setText('');
-        }
 
-        hsPos = game.add.text(280, 180 + (i * 25), `${i + 1}.`, nameFontProps);
-        hsName = game.add.text(330, 180 + (i * 25), highscores[i].name.toUpperCase().replace(/[^A-Z0-9]+/g, '').substr(0, 10), nameFontProps);
-        hsScore = game.add.text(470, 180 + (i * 25), highscores[i].points, nameFontProps);
+        if (hsPos[i]) hsPos[i].destroy();
+        hsPos[i] = game.add.text(280, 180 + (i * 25), `${i + 1}.`, nameFontProps);
+
+        if (hsName[i]) hsName[i].destroy();
+        hsName[i] = game.add.text(330, 180 + (i * 25), highscores[i].name.toUpperCase().replace(/[^A-Z0-9]+/g, '').substr(0, 10), nameFontProps);
+
+        if (hsScore[i]) hsScore[i].destroy();
+        hsScore[i] = game.add.text(470, 180 + (i * 25), highscores[i].points, nameFontProps);
       }
     }
   });
