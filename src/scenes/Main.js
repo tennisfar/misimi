@@ -125,7 +125,6 @@ export default class Main extends Phaser.Scene {
     this.fxGameOver = this.sound.add('gameOver');
 
     this.score = 0;
-    showHighscores(this);
   }
 
   update() {
