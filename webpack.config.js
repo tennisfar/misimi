@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const GoogleFontsPlugin = require("google-fonts-webpack-plugin");
 
 // Phaser webpack config
 const phaserModule = path.join(__dirname, '/node_modules/phaser/');
@@ -61,13 +60,6 @@ module.exports = {
         baseDir: ['./', './build'],
       },
     }),
-    new GoogleFontsPlugin({
-      fonts: [
-        { family: "VT323" },
-        /*{ family: "Roboto", variants: [ "400", "700italic" ] }*/
-      ]
-      /* ...options */
-    })
   ],
   module: {
     rules: [

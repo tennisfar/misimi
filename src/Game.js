@@ -21,6 +21,19 @@ window.onload = function () {
     ],
   };
 
-  const game = new Phaser.Game(config);
+  const webFontLoading = {
+    active() {
+      new Phaser.Game(config);
+    },
+    google: {
+      families: ['VT323']
+    },
+    // custom: {
+    //   families: ['FerrumExtracondensed'],
+    //   urls: ["https://fontlibrary.org/face/ferrum"]
+    // }
+  };
+
+  WebFont.load(webFontLoading);
 
 };
