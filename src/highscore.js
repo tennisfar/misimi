@@ -15,7 +15,7 @@ export function addHighscore(score) {
 }
 
 export function showHighscores(game) {
-  const rect = new Phaser.Geom.Rectangle(0, 0, 800, 600);
+  const rect = new Phaser.Geom.Rectangle(0, 0, 800, 650);
   const graphics = game.add.graphics({ fillStyle: { color: 'black', alpha: '.65' } });
   graphics.fillRectShape(rect);
 
@@ -24,7 +24,7 @@ export function showHighscores(game) {
     fill: 'white'
   };
 
-  game.add.text(230, 40, 'Simi Spillet', { font: '400 70px VT323' });
+  game.add.text(305, 40, 'MISIMI', { font: '400 80px VT323' });
 
   game.add.text(290, 120, 'High Scores', { font: '400 50px VT323' });
 
