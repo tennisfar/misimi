@@ -127,17 +127,28 @@ export default class Main extends Phaser.Scene {
     this.score = 0;
 
     this.btnLeft = this.add.sprite(0, 0, '').setInteractive();
+    this.btnRight = this.add.sprite(545, 0, '').setInteractive();
+    this.btnDown = this.add.sprite(272, 0, '').setInteractive();
+    
     this.btnLeft.on('pointerdown', () => this.movingLeft = true);
     this.btnLeft.on('pointerup', () => this.movingLeft = false);
-    this.btnRight = this.add.sprite(400, 0, '').setInteractive();
+    
     this.btnRight.on('pointerdown', () => this.movingRight = true);
     this.btnRight.on('pointerup', () => this.movingRight = false);
-    this.btnLeft.setScale(12.3, 20);
+
+    this.btnDown.on('pointerdown', () => this.movingUp = true);
+    this.btnDown.on('pointerup', () => this.movingUp = false);
+    
+    this.btnLeft.setScale(8, 20.1);
+    this.btnRight.setScale(8, 20.1);
+    this.btnDown.setScale(8, 20.1);
     this.btnLeft.setOrigin(0, 0);
-    this.btnRight.setScale(12.3, 20);
     this.btnRight.setOrigin(0, 0);
-    this.btnLeft.alpha = 0.00001;
-    this.btnRight.alpha = 0.00001;
+    this.btnDown.setOrigin(0, 0);
+    
+    this.btnLeft.alpha = 0.0001;
+    this.btnRight.alpha = 0.0001;
+    this.btnDown.alpha = 0.0001;
   }
 
   update() {
@@ -145,7 +156,7 @@ export default class Main extends Phaser.Scene {
       return;
     }
 
-    if ((this.cursors.up.isDown || this.cursors.space.isDown || (this.movingLeft && this.movingRight)) && this.player.body.touching.down) {
+    if ((this.cursors.up.isDown || this.cursors.space.isDown || this.movingUp) && this.player.body.touching.down) {
       this.player.setVelocityY(-330);
     } else if (this.cursors.left.isDown || this.movingLeft) {
       this.player.setVelocityX(-160);
