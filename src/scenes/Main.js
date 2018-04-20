@@ -125,7 +125,7 @@ export default class Main extends Phaser.Scene {
     this.fxGameOver = this.sound.add('gameOver');
 
     this.score = 0;
-    
+
     this.btnLeft = this.add.sprite(0, 0, '').setInteractive();
     this.btnLeft.on('pointerdown', () => this.movingLeft = true);
     this.btnLeft.on('pointerup', () => this.movingLeft = false);
@@ -145,7 +145,9 @@ export default class Main extends Phaser.Scene {
       return;
     }
 
-    if (this.cursors.left.isDown || this.movingLeft) {
+    if ((this.cursors.up.isDown || this.cursors.space.isDown || (this.movingLeft && this.movingRight)) && this.player.body.touching.down) {
+      this.player.setVelocityY(-330);
+    } else if (this.cursors.left.isDown || this.movingLeft) {
       this.player.setVelocityX(-160);
       this.player.anims.play('left', true);
 
@@ -159,8 +161,5 @@ export default class Main extends Phaser.Scene {
 
     }
 
-    if ((this.cursors.up.isDown || this.cursors.space.isDown || (this.movingLeft && this.movingRight)) && this.player.body.touching.down) {
-      this.player.setVelocityY(-330);
-    }
   }
 }
