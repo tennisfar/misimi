@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {addHighscore, showHighscores} from '../highscore';
+import { addHighscore, showHighscores } from '../highscore';
 
 export default class Main extends Phaser.Scene {
   constructor() {
@@ -12,9 +12,9 @@ export default class Main extends Phaser.Scene {
     player.setTint(0xff0000);
     player.anims.play('turn');
     this.gameOver = true;
-    this.cameras.main.shake(500);
+    this.cameras.main.shake(2500);
 
-    this.time.delayedCall(500, function () {
+    this.time.delayedCall(2500, function () {
       addHighscore(this.score);
       showHighscores(this);
     }, [], this);
@@ -129,23 +129,23 @@ export default class Main extends Phaser.Scene {
     this.btnLeft = this.add.sprite(0, 0, '').setInteractive();
     this.btnRight = this.add.sprite(545, 0, '').setInteractive();
     this.btnDown = this.add.sprite(272, 0, '').setInteractive();
-    
+
     this.btnLeft.on('pointerdown', () => this.movingLeft = true);
     this.btnLeft.on('pointerup', () => this.movingLeft = false);
-    
+
     this.btnRight.on('pointerdown', () => this.movingRight = true);
     this.btnRight.on('pointerup', () => this.movingRight = false);
 
     this.btnDown.on('pointerdown', () => this.movingUp = true);
     this.btnDown.on('pointerup', () => this.movingUp = false);
-    
+
     this.btnLeft.setScale(8, 20.1);
     this.btnRight.setScale(8, 20.1);
     this.btnDown.setScale(8, 20.1);
     this.btnLeft.setOrigin(0, 0);
     this.btnRight.setOrigin(0, 0);
     this.btnDown.setOrigin(0, 0);
-    
+
     this.btnLeft.alpha = 0.0001;
     this.btnRight.alpha = 0.0001;
     this.btnDown.alpha = 0.0001;
