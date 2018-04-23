@@ -32,34 +32,33 @@ export function showHighscores(game) {
   let hsName = [];
   let hsScore = [];
 
-  firestore.collection('highscores').onSnapshot((snapshot) => {
-    let highscores = [];
-
+  firestore.collection('highscores')
+  .orderBy('points', 'desc')
+  .limit(15)
+  .onSnapshot((snapshot) => {
+    let i = 0;
+    let prevScore = { nameFontProps: '', points: '' };
     snapshot.forEach((doc) => {
-      const highscore = doc.data();
-      highscore.id = doc.id;
-      highscores.push(highscore);
+      let { name, points } = doc.data();
+      name = name.toUpperCase().replace(/[^A-Z0-9]+/g, '').substr(0, 10);
+      // if (name === prevScore.name && points === prevScore.points) return;
+
+      if (hsPos[i]) hsPos[i].destroy();
+      hsPos[i] = game.add.text(280, 180 + (i * 25), `${i + 1}.`, nameFontProps);
+
+      if (hsName[i]) hsName[i].destroy();
+      hsName[i] = game.add.text(330, 180 + (i * 25),
+        name,
+        nameFontProps);
+
+      if (hsScore[i]) hsScore[i].destroy();
+      hsScore[i] = game.add.text(470, 180 + (i * 25),
+        points,
+        nameFontProps);
+
+      prevScore = { name, points };
+      i++;
     });
 
-    // sort by highest points
-    highscores.sort((a, b) => (a.points > b.points ? -1 : 1));
-
-    // get only unique scores
-    highscores = highscores.filter((score, index, self) => index === self.findIndex((t) => t.points === score.points && t.name === score.name));
-
-    // display top 15 scores
-    for (let i = 0; i < 15; i += 1) {
-      if (highscores[i]) {
-
-        if (hsPos[i]) hsPos[i].destroy();
-        hsPos[i] = game.add.text(280, 180 + (i * 25), `${i + 1}.`, nameFontProps);
-
-        if (hsName[i]) hsName[i].destroy();
-        hsName[i] = game.add.text(330, 180 + (i * 25), highscores[i].name.toUpperCase().replace(/[^A-Z0-9]+/g, '').substr(0, 10), nameFontProps);
-
-        if (hsScore[i]) hsScore[i].destroy();
-        hsScore[i] = game.add.text(470, 180 + (i * 25), highscores[i].points, nameFontProps);
-      }
-    }
   });
 }
