@@ -6,8 +6,8 @@ window.onload = function () {
   const config = {
     type: Phaser.AUTO,
     parent: 'content',
-    height: 650,
-    width: 800,
+    height: 19*35,
+    width: 23*35,
     physics: {
       arcade: {
         debug: false,
