@@ -110,7 +110,7 @@ export default class Main extends Phaser.Scene {
     this.scoreText = this.add.text(16, 16, 'Score: 0', { font: '400 32px VT323', fill: '#000' });
 
     //  Collide the player and the stars with the platforms
-    this.physics.add.collider(this.player, this.platforms);
+    //this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.stars, this.platforms);
     this.physics.add.collider(this.bombs, this.platforms);
 
@@ -149,6 +149,26 @@ export default class Main extends Phaser.Scene {
     this.btnLeft.alpha = 0.0001;
     this.btnRight.alpha = 0.0001;
     this.btnDown.alpha = 0.0001;
+
+
+    // load the map 
+    const map = this.make.tilemap({key: 'map'});
+
+    // tiles for the ground layer
+    const groundTiles = map.addTilesetImage('tiles');
+    // create the ground layer
+    const groundLayer = map.createDynamicLayer('World', groundTiles, 0, 0);
+    // the player will collide with this layer
+    groundLayer.setCollisionByExclusion([-1]);
+
+    //  Collide the player and the stars with the platforms
+    this.physics.add.collider(this.player, groundLayer);
+    this.physics.add.collider(this.stars, groundLayer);
+    this.physics.add.collider(this.bombs, groundLayer);
+    
+    // https://gamedevacademy.org/how-to-make-a-mario-style-platformer-with-phaser-3/?a=13
+    // https://www.mapeditor.org/
+    
   }
 
   update() {
@@ -156,7 +176,7 @@ export default class Main extends Phaser.Scene {
       return;
     }
 
-    if ((this.cursors.up.isDown || this.cursors.space.isDown || this.movingUp) && this.player.body.touching.down) {
+    if ((this.cursors.up.isDown || this.cursors.space.isDown || this.movingUp) && this.player.body.onFloor()) {
       this.player.setVelocityY(-330);
     } else if (this.cursors.left.isDown || this.movingLeft) {
       this.player.setVelocityX(-160);

@@ -1,4 +1,4 @@
-import {config} from '../config/preload';
+import { config } from '../config/preload';
 
 export default class Preloader extends Phaser.Scene {
   constructor() {
@@ -47,6 +47,9 @@ export default class Preloader extends Phaser.Scene {
       './assets/spritesheets/misimi.png',
       { frameWidth: 32, frameHeight: 57 },
     );
+
+    this.load.tilemapTiledJSON('map', './assets/spritesheets/map.json');
+    this.load.spritesheet('tiles', './assets/spritesheets/tiles.png', { frameWidth: 70, frameHeight: 70 });
 
     // const sheetPath = config.ssPath;
     // const sheets = config.sheets;
