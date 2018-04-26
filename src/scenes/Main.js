@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { addHighscore, showHighscores } from '../highscore';
+import { initNavigation, navigation } from '../components/Navigate';
 
 export default class Main extends Phaser.Scene {
   constructor() {
@@ -87,8 +88,7 @@ export default class Main extends Phaser.Scene {
       repeat: -1,
     });
 
-    //  Input Events
-    this.cursors = this.input.keyboard.createCursorKeys();
+    initNavigation(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     this.stars = this.physics.add.group({
@@ -124,52 +124,11 @@ export default class Main extends Phaser.Scene {
 
     this.score = 0;
 
-    this.btnLeft = this.add.sprite(0, 0, '').setInteractive();
-    this.btnRight = this.add.sprite(545, 0, '').setInteractive();
-    this.btnDown = this.add.sprite(272, 0, '').setInteractive();
-
-    this.btnLeft.on('pointerdown', () => this.movingLeft = true);
-    this.btnLeft.on('pointerup', () => this.movingLeft = false);
-
-    this.btnRight.on('pointerdown', () => this.movingRight = true);
-    this.btnRight.on('pointerup', () => this.movingRight = false);
-
-    this.btnDown.on('pointerdown', () => this.movingUp = true);
-    this.btnDown.on('pointerup', () => this.movingUp = false);
-
-    this.btnLeft.setScale(8, 20.1);
-    this.btnRight.setScale(8, 20.1);
-    this.btnDown.setScale(8, 20.1);
-    this.btnLeft.setOrigin(0, 0);
-    this.btnRight.setOrigin(0, 0);
-    this.btnDown.setOrigin(0, 0);
-
-    this.btnLeft.alpha = 0.0001;
-    this.btnRight.alpha = 0.0001;
-    this.btnDown.alpha = 0.0001;
 
   }
 
   update() {
-    if (this.gameOver) {
-      return;
-    }
-
-    if ((this.cursors.up.isDown || this.cursors.space.isDown || this.movingUp) && this.player.body.onFloor()) {
-      this.player.setVelocityY(-330);
-    } else if (this.cursors.left.isDown || this.movingLeft) {
-      this.player.setVelocityX(-160);
-      this.player.anims.play('left', true);
-
-    } else if (this.cursors.right.isDown || this.movingRight) {
-      this.player.setVelocityX(160);
-      this.player.anims.play('right', true);
-
-    } else {
-      this.player.setVelocityX(0);
-      this.player.anims.play('turn');
-
-    }
-
+    if (this.gameOver) return;
+    navigation(this);
   }
 }
