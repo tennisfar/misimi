@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import firestore from './config/firestore'
+import gameConfig from './config/GameConfig'
 
 export function addHighscore(score) {
   const playerName = prompt('Enter your name', localStorage.getItem('misimiPlayerName') || '')
@@ -15,7 +16,7 @@ export function addHighscore(score) {
 }
 
 export function showHighscores(game) {
-  const rect = new Phaser.Geom.Rectangle(0, 0, 800, 650)
+  const rect = new Phaser.Geom.Rectangle(0, 0, gameConfig.width, gameConfig.height)
   const graphics = game.add.graphics({ fillStyle: { color: 'black', alpha: '.65' } })
   graphics.fillRectShape(rect)
 
