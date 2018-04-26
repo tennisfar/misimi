@@ -6,13 +6,13 @@
  */
 export class AudioFile {
   constructor(key, mp3, ogg) {
-    this.key = key;
-    this.mp3 = mp3;
-    this.ogg = ogg;
+    this.key = key
+    this.mp3 = mp3
+    this.ogg = ogg
   }
 }
 
-const assetDir = './assets';
+const assetDir = './assets'
 
 export const config = {
   // spritesheets
@@ -27,4 +27,4 @@ export const config = {
     new AudioFile('sfx', '131660__bertrof__game-sound-correct.wav'),
     new AudioFile('gameOver', '406113__daleonfire__dead.wav'),
   ],
-};
+}

@@ -1,13 +1,13 @@
-import Phaser from 'phaser';
-import Preloader from './scenes/Preloader';
-import Main from './scenes/Main';
+import Phaser from 'phaser'
+import Preloader from './scenes/Preloader'
+import Main from './scenes/Main'
 
-window.onload = function () {
+window.onload = () => {
   const config = {
     type: Phaser.AUTO,
     parent: 'content',
-    height: 19*35,
-    width: 23*35,
+    height: 19 * 35,
+    width: 23 * 35,
     physics: {
       arcade: {
         debug: false,
@@ -19,21 +19,20 @@ window.onload = function () {
       Preloader,
       Main,
     ],
-  };
+  }
 
   const webFontLoading = {
     active() {
-      new Phaser.Game(config);
+      new Phaser.Game(config)
     },
     google: {
-      families: ['VT323']
+      families: ['VT323'],
     },
     // custom: {
     //   families: ['FerrumExtracondensed'],
     //   urls: ["https://fontlibrary.org/face/ferrum"]
     // }
-  };
+  }
 
-  WebFont.load(webFontLoading);
-
-};
+  WebFont.load(webFontLoading)
+}
