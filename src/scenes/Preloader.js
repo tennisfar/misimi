@@ -6,7 +6,6 @@ export default class Preloader extends Phaser.Scene {
       key: 'preloader',
       files: [
         { type: 'image', key: 'sky', url: './assets/images/sky.png' },
-        { type: 'image', key: 'ground', url: './assets/images/platform.png' },
         { type: 'image', key: 'star', url: './assets/images/star.png' },
         { type: 'image', key: 'bomb', url: './assets/images/bomb.png' },
       ],
@@ -33,7 +32,7 @@ export default class Preloader extends Phaser.Scene {
     // // load assets declared in the preload config
     this.loadSpritesheet();
     this.loadAudio();
-    this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+    // this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
   }
 
   create() {
