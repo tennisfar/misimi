@@ -154,8 +154,6 @@ export default class Main extends Phaser.Scene {
     this.physics.world.setBounds(worldProp.x, worldProp.y, worldProp.width, worldProp.height)
     this.player.setCollideWorldBounds(true)
     cam.startFollow(this.player)
-
-    showHighscores(this)
   }
 
   update() {
