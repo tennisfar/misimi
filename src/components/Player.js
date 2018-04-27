@@ -1,5 +1,36 @@
-export function initNavigation(game) {
+import { start } from '../config/dimensions'
+
+const startPos = {
+  x: start.x + 100,
+  y: start.y + 450,
+}
+
+export function setupPlayer(game) {
   const g = game
+  g.player = g.physics.add.sprite(startPos.x, startPos.y, 'misimi')
+  g.player.setBounce(0.2)
+
+  //  Our player animations, turning, walking left and walking right.
+  g.anims.create({
+    key: 'left',
+    frames: g.anims.generateFrameNumbers('misimi', { start: 0, end: 3 }),
+    frameRate: 10,
+    repeat: -1,
+  })
+
+  g.anims.create({
+    key: 'turn',
+    frames: [{ key: 'misimi', frame: 4 }],
+    frameRate: 20,
+  })
+
+  g.anims.create({
+    key: 'right',
+    frames: g.anims.generateFrameNumbers('misimi', { start: 5, end: 8 }),
+    frameRate: 10,
+    repeat: -1,
+  })
+
   g.cursors = g.input.keyboard.createCursorKeys()
 
   g.btnLeft = g.add.sprite(0, 0, '').setInteractive()
@@ -35,9 +66,13 @@ export function initNavigation(game) {
   g.btnLeft.alpha = 0.0001
   g.btnRight.alpha = 0.0001
   g.btnDown.alpha = 0.0001
+
+  g.physics.add.collider(g.player, g.groundLayer)
+  
+
 }
 
-export function navigation(game) {
+export function navigatePlayer(game) {
   const g = game
   if ((g.cursors.up.isDown || g.cursors.space.isDown || g.movingUp) && g.player.body.onFloor()) {
     g.player.setVelocityY(-330)

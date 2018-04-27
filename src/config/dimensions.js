@@ -20,6 +20,13 @@ export const worldProp = {
 worldProp.width = worldProp.tilesX * tileWidth
 worldProp.height = worldProp.tilesY * tileHeight
 
+export function increaseWorldPropTiles(tilesX, tilesY) {
+  worldProp.tilesX += tilesX
+  worldProp.tilesY += tilesY
+  worldProp.width = worldProp.tilesX * tileWidth
+  worldProp.height = worldProp.tilesY * tileHeight
+}
+
 export const mapProps = {
   width: tileWidth * 50,
   height: tileHeight * 100,

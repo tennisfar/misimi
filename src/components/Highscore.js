@@ -1,9 +1,21 @@
 import Phaser from 'phaser'
-import firestore from './config/firestore'
-import { mapProps, camProps } from './config/dimensions'
+import firestore from '../config/firestore'
+import { mapProps, camProps, worldProp } from '../config/dimensions'
 
 let playerName = ''
 let playerScore = 0
+
+export function setupHighscore(game) {
+  const g = game
+  // the score
+  g.scoreText = game.add.text(
+    16, 16, 'Score: 0',
+    { font: '400 32px VT323', fill: '#000' },
+  )
+  g.scoreText.setScrollFactor(0)
+
+  g.score = 0
+}
 
 export function addHighscore(score) {
   playerScore = score
@@ -24,7 +36,7 @@ export function showHighscores(game) {
   const graphics = game.add.graphics({ fillStyle: { color: 'black', alpha: '.65' } })
   graphics.fillRectShape(rect)
 
-  const hsColor = '#fffa65'
+  const hsColor = '#fff'
 
   const nameFontProps = {
     font: '400 34px VT323',
@@ -38,12 +50,13 @@ export function showHighscores(game) {
     align: 'right',
   }
 
-  const container = game.add.container(camProps().width / 2, 100)
+  const container = game.add.container((camProps().width - game.cam.x) / 2, 100)
 
   const setContainerWidth = () => {
     container.x = camProps().width / 2
   }
   window.addEventListener('resize', setContainerWidth)
+  container.setScrollFactor(0)
 
   const title = game.add.text(0, 0, 'MISIMI', { font: '400 80px VT323', color: hsColor })
   Phaser.Display.Align.In.Center(title, game.add.zone(0, 0, 0, 0))
