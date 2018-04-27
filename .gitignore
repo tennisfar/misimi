@@ -5,3 +5,4 @@ dist/
 build/
 *.sln
 *.log
+package-lock.json
