@@ -1,9 +1,13 @@
 import Phaser from 'phaser'
 import firestore from './config/firestore'
-import gameConfig from './config/GameConfig'
+import { mapProps, camProps } from './config/dimensions'
+
+let playerName = ''
+let playerScore = 0
 
 export function addHighscore(score) {
-  const playerName = prompt('Enter your name', localStorage.getItem('misimiPlayerName') || '')
+  playerScore = score
+  playerName = prompt('Enter your name', localStorage.getItem('misimiPlayerName') || '')
 
   if (playerName) {
     localStorage.setItem('misimiPlayerName', playerName)
@@ -16,53 +20,94 @@ export function addHighscore(score) {
 }
 
 export function showHighscores(game) {
-  const rect = new Phaser.Geom.Rectangle(0, 0, gameConfig.width, gameConfig.height)
+  const rect = new Phaser.Geom.Rectangle(0, 0, mapProps.width, mapProps.height)
   const graphics = game.add.graphics({ fillStyle: { color: 'black', alpha: '.65' } })
   graphics.fillRectShape(rect)
 
+  const hsColor = '#fffa65'
+
   const nameFontProps = {
-    font: '400 32px VT323',
-    fill: 'white',
+    font: '400 34px VT323',
+    color: hsColor,
+    align: 'left',
   }
 
-  game.add.text(305, 40, 'MISIMI', { font: '400 80px VT323' })
+  const numberFontProps = {
+    font: '400 34px VT323',
+    color: hsColor,
+    align: 'right',
+  }
 
-  game.add.text(290, 120, 'High Scores', { font: '400 50px VT323' })
+  const container = game.add.container(camProps().width / 2, 100)
 
-  const hsPos = []
-  const hsName = []
-  const hsScore = []
+  const setContainerWidth = () => {
+    container.x = camProps().width / 2
+  }
+  window.addEventListener('resize', setContainerWidth)
 
-  firestore.collection('highscores')
-    .orderBy('points', 'desc')
-    .limit(15)
-    .onSnapshot((snapshot) => {
-      let i = 0
-      let prevScore = { nameFontProps: '', points: '' }
-      snapshot.forEach((doc) => {
-        let { name, points } = doc.data()
-        name = name.toUpperCase().replace(/[^A-Z0-9]+/g, '').substr(0, 10)
-        // if (name === prevScore.name && points === prevScore.points) return;
+  const title = game.add.text(0, 0, 'MISIMI', { font: '400 80px VT323', color: hsColor })
+  Phaser.Display.Align.In.Center(title, game.add.zone(0, 0, 0, 0))
+  title.setScrollFactor(0)
+  container.add(title)
 
-        if (hsPos[i]) hsPos[i].destroy()
-        hsPos[i] = game.add.text(280, 180 + (i * 25), `${i + 1}.`, nameFontProps)
+  const subTitle = game.add.text(0, 0, 'High Scores', { font: '400 50px VT323', color: hsColor })
+  Phaser.Display.Align.In.Center(subTitle, game.add.zone(0, 50, 0, 0))
+  subTitle.setScrollFactor(0)
+  container.add(subTitle)
 
-        if (hsName[i]) hsName[i].destroy()
-        hsName[i] = game.add.text(
-          330, 180 + (i * 25),
-          name,
-          nameFontProps,
-        )
+  const leftAligner = -165
+  const topAligner = 100
 
-        if (hsScore[i]) hsScore[i].destroy()
-        hsScore[i] = game.add.text(
-          470, 180 + (i * 25),
-          points,
-          nameFontProps,
-        )
+  const hsPositions = game.add.text(0, 0, '', numberFontProps)
+  Phaser.Display.Align.In.Center(hsPositions, game.add.zone(leftAligner, topAligner, 0, 0))
+  hsPositions.setScrollFactor(0)
+  container.add(hsPositions)
 
-        prevScore = { name, points }
-        i++
-      })
+  const hsNames = game.add.text(0, 0, '', nameFontProps)
+  Phaser.Display.Align.In.Center(hsNames, game.add.zone(leftAligner + 70, topAligner, 0, 0))
+  hsNames.setScrollFactor(0)
+  container.add(hsNames)
+
+  const hsPoints = game.add.text(0, 0, '', numberFontProps)
+  Phaser.Display.Align.In.Center(hsPoints, game.add.zone(leftAligner + 250, topAligner, 0, 0))
+  hsPoints.setScrollFactor(0)
+  container.add(hsPoints)
+
+  const formatName = name => name.toUpperCase().replace(/[^A-Z0-9]+/g, '').substr(0, 10)
+
+  firestore.collection('highscores').orderBy('points', 'desc').onSnapshot((snapshot) => {
+    let hsPositionsStr = ''
+    let hsNamesStr = ''
+    let hsPointsStr = ''
+    let i = 1
+    let foundPlayersSpot
+    let lowestTopScore = 999999999
+
+    snapshot.forEach((doc) => {
+      const { name, points } = doc.data()
+
+      if (i <= 10) {
+        if (lowestTopScore > points) lowestTopScore = points
+        hsPositionsStr += `${i}.\n`
+        hsNamesStr += `${formatName(name)}\n`
+        hsPointsStr += `${points}\n`
+      } else if (
+        playerName &&
+        (points < playerScore) &&
+        !foundPlayersSpot &&
+        (playerScore <= lowestTopScore)
+      ) {
+        hsPositionsStr += `\n${i}.\n`
+        hsNamesStr += `...\n${formatName(playerName)}\n`
+        hsPointsStr += `\n${playerScore}\n`
+        foundPlayersSpot = true
+      }
+
+      i += 1
     })
+
+    hsPositions.setText(hsPositionsStr)
+    hsNames.setText(hsNamesStr)
+    hsPoints.setText(hsPointsStr)
+  })
 }

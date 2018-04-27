@@ -1,6 +1,9 @@
 import Phaser from 'phaser'
 import { addHighscore, showHighscores } from '../highscore'
 import { initNavigation, navigation } from '../components/Navigate'
+import { start, worldProp, camProps } from '../config/dimensions'
+
+let cam
 
 export default class Main extends Phaser.Scene {
   constructor() {
@@ -13,7 +16,8 @@ export default class Main extends Phaser.Scene {
     player.setTint(0xff0000)
     player.anims.play('turn')
     this.gameOver = true
-    this.cameras.main.shake(2500)
+    cam.flash(1000)
+    // this.cameras.main.shake(2500)
 
     this.time.delayedCall(2500, () => {
       addHighscore(this.score)
@@ -33,10 +37,12 @@ export default class Main extends Phaser.Scene {
     if (this.stars.countActive(true) === 0) {
       //  A new batch of stars to collect
       this.stars.children.iterate((child) => {
-        child.enableBody(true, child.x, 0, true, true)
+        child.enableBody(true, child.x, start.y, true, true)
       })
 
-      const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400)
+      const x = (player.x < 400 + start.x)
+        ? Phaser.Math.Between(400 + start.x, 800 + start.x)
+        : Phaser.Math.Between(start.x, 400 + start.x)
 
       const bomb = this.bombs.create(x, 16, 'bomb')
       bomb.setBounce(1)
@@ -48,7 +54,7 @@ export default class Main extends Phaser.Scene {
 
   create() {
     //  A simple background for our game
-    this.add.image(400, 300, 'sky').setScale(2, 2)
+    this.add.image(start.x + 400, start.y + 300, 'sky').setScale(20, 3)
 
     // load the map
     const map = this.make.tilemap({ key: 'map' })
@@ -61,11 +67,11 @@ export default class Main extends Phaser.Scene {
     groundLayer.setCollisionByExclusion([-1])
 
     // The player and its settings
-    this.player = this.physics.add.sprite(100, 450, 'misimi')
+    this.player = this.physics.add.sprite(start.x + 100, start.y + 450, 'misimi')
 
     //  Player physics properties. Give the little guy a slight bounce.
     this.player.setBounce(0.2)
-    this.player.setCollideWorldBounds(true)
+
 
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
@@ -94,7 +100,7 @@ export default class Main extends Phaser.Scene {
     this.stars = this.physics.add.group({
       key: 'star',
       repeat: 11,
-      setXY: { x: 17, y: 0, stepX: 70 },
+      setXY: { x: start.x + 17, y: start.y, stepX: 70 },
     })
 
     this.stars.children.iterate((child) => {
@@ -110,7 +116,11 @@ export default class Main extends Phaser.Scene {
     this.physics.add.collider(this.bombs, groundLayer)
 
     //  The score
-    this.scoreText = this.add.text(16, 16, 'Score: 0', { font: '400 32px VT323', fill: '#000' })
+    this.scoreText = this.add.text(
+      16, 16, 'Score: 0',
+      { font: '400 32px VT323', fill: '#000' },
+    )
+    this.scoreText.setScrollFactor(0)
 
     //  Checks to see if the player overlaps with any of the stars,
     //  if he does call the collectStar function
@@ -123,6 +133,29 @@ export default class Main extends Phaser.Scene {
     this.fxGameOver = this.sound.add('gameOver')
 
     this.score = 0
+
+    cam = this.cameras.main
+    // cam.scrollX = camProps().x
+    // cam.scrollY = camProps().y
+
+    const setCamViewPort = () => {
+      cam.setViewport(
+        camProps().x,
+        camProps().y,
+        camProps().width,
+        camProps().height,
+      )
+    }
+
+    setCamViewPort()
+    window.addEventListener('resize', setCamViewPort)
+
+    cam.setBounds(worldProp.x, worldProp.y, worldProp.width, worldProp.height)
+    this.physics.world.setBounds(worldProp.x, worldProp.y, worldProp.width, worldProp.height)
+    this.player.setCollideWorldBounds(true)
+    cam.startFollow(this.player)
+
+    showHighscores(this)
   }
 
   update() {
