@@ -1,4 +1,4 @@
-export function setupMap(game) {
+export default function setupMap(game) {
   const g = game
 
   //  A simple background for our game

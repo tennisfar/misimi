@@ -68,8 +68,6 @@ export function setupPlayer(game) {
   g.btnDown.alpha = 0.0001
 
   g.physics.add.collider(g.player, g.groundLayer)
-  
-
 }
 
 export function navigatePlayer(game) {

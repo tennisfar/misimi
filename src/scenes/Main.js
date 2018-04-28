@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import { setupCamera } from '../components/Camera'
 import { setupPlayer, navigatePlayer } from '../components/Player'
-import { setupMap } from '../components/World'
+import setupMap from '../components/World'
 import setupStars from '../components/Stars'
 import { setupBombs } from '../components/Bombs'
 import { setupHighscore } from '../components/Highscore'

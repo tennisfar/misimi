@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import firestore from '../config/firestore'
-import { mapProps, camProps, worldProp } from '../config/dimensions'
+import { mapProps, camProps } from '../config/dimensions'
 
 let playerName = ''
 let playerScore = 0

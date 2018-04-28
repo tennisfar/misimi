@@ -4,6 +4,21 @@ import { worldProp } from '../config/dimensions'
 
 let g
 
+function hitBomb(player) {
+  g.fxGameOver.play()
+  g.physics.pause()
+  player.setTint(0xff0000)
+  player.anims.play('turn')
+  g.gameOver = true
+  g.cam.flash(1000)
+  // this.cameras.main.shake(2500)
+
+  g.time.delayedCall(2500, () => {
+    addHighscore(g.score)
+    showHighscores(this)
+  }, [], this)
+}
+
 export function setupBombs(game) {
   g = game
 
@@ -13,21 +28,6 @@ export function setupBombs(game) {
   g.physics.add.collider(g.bombs, g.groundLayer)
 
   g.physics.add.collider(g.player, g.bombs, hitBomb, null, g)
-
-  function hitBomb(player) {
-    g.fxGameOver.play()
-    g.physics.pause()
-    player.setTint(0xff0000)
-    player.anims.play('turn')
-    g.gameOver = true
-    g.cam.flash(1000)
-    // this.cameras.main.shake(2500)
-
-    g.time.delayedCall(2500, () => {
-      addHighscore(g.score)
-      showHighscores(this)
-    }, [], this)
-  }
 }
 
 export function createBomb(player) {

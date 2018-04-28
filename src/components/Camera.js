@@ -33,7 +33,7 @@ export function setupCamera(game) {
 export function resizeWorld(tilesX, tilesY) {
   const maxTile = Math.max(tilesX, tilesY)
   let factor = 0
-  const id = setInterval(frame, 100)
+  let id
 
   function frame() {
     if (factor > maxTile) {
@@ -46,4 +46,6 @@ export function resizeWorld(tilesX, tilesY) {
       factor += 1
     }
   }
+
+  id = setInterval(frame, 100)
 }
