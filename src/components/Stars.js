@@ -1,12 +1,10 @@
 import Phaser from 'phaser'
 import { start, worldProp } from '../config/dimensions'
 import { createBomb } from './Bombs'
-import { resizeWorld } from './Camera'
 
 let g
 
 function collectStar(player, star) {
-  // resizeWorld(4, 2)
   star.disableBody(true, true)
   g.fx.play()
 
@@ -20,6 +18,7 @@ function collectStar(player, star) {
       child.enableBody(true, child.x, worldProp.y, true, true)
     })
 
+    // resizeWorld(5, 0)
     createBomb(player)
   }
 }
