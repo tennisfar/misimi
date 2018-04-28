@@ -38,7 +38,6 @@ export function resizeWorld(tilesX, tilesY) {
   function frame() {
     if (factor > maxTile) {
       clearInterval(id)
-      console.log(factor)
     } else {
       const x = factor < tilesX ? 1 : 0
       const y = factor < tilesY ? 1 : 0
